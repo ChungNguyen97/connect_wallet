@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h3 @click="handleClick" class="intro">Wellcome Fewcha Wallet</h3>
+    <h3 class="intro">Wellcome Fewcha Wallet</h3>
   </div>
 </template>
 
@@ -8,11 +8,7 @@
 export default {
   name: "HomeView",
 
-  methods: {
-    handleClick() {
-      console.log(1);
-    },
-  },
+  
 };
 </script>
 

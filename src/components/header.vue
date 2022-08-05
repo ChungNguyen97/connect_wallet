@@ -22,7 +22,6 @@ export default {
     async handleConnect() {
       console.log("connecting.....");
       const r = await window?.fewcha?.connect();
-      // console.log("r: ", r);
       if (r.status === 200) {
         this.isConnect = true;
         const balance_value = await window?.fewcha?.getBalance();
@@ -39,17 +38,29 @@ export default {
       console.log("isConnected2: ", isConnected);
       this.isConnect = await isConnected?.data;
     },
+    async get_status_connect() {
+      const status_connect = await window?.fewcha?.isConnected();
+      console.log("status_connect", status_connect);
+      if (status_connect.status === 200) {
+        this.isConnect = status_connect.data;
+      }
+    },
+    async get_balance() {
+      if (this.isConnect) {
+        const balance_value = await window?.fewcha?.getBalance();
+        if (balance_value.data && typeof balance_value.data === "string") {
+          this.balance = balance_value.data;
+        }
+        console.log("balance_value: ", balance_value);
+      }
+    },
   },
-  async created() {
-    const isConnected3 = await window?.fewcha?.isConnected();
-    console.log("isConnected3", isConnected3);
-    this.isConnect = await isConnected3?.data;
 
-    const balance_start = await window?.fewcha?.getBalance();
-    console.log("balance_start", balance_start);
-    if (balance_start?.data && typeof balance_start?.data === "string") {
-      this.balance = balance_start.data;
-    }
+  async created() {
+    setTimeout(() => {
+      this.get_status_connect();
+      this.get_balance();
+    }, 500);
   },
 };
 </script>
@@ -60,8 +71,9 @@ export default {
   background-color: #f5f5f5;
   display: flex;
   justify-content: center;
-  gap: 24px;
+  column-gap: 24px;
   font-family: Arial, Helvetica, sans-serif;
+  padding: 2px 20px;
   p {
     text-decoration: underline;
     font-weight: 700;

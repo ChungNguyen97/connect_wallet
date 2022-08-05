@@ -15,12 +15,11 @@
 export default {
   name: "HeaderComp",
   data: () => ({
-    isConnect: "false",
+    isConnect: false,
     balance: "",
   }),
   methods: {
     async handleConnect() {
-      console.log("connecting.....");
       const r = await window?.fewcha?.connect();
       if (r.status === 200) {
         this.isConnect = true;
@@ -32,26 +31,24 @@ export default {
       }
     },
     async hanldeDisConnect() {
-      console.log("disconnect.....");
       await window?.fewcha?.disconnect();
       const isConnected = await window?.fewcha?.isConnected();
       console.log("isConnected2: ", isConnected);
       this.isConnect = await isConnected?.data;
     },
+
     async get_status_connect() {
       const status_connect = await window?.fewcha?.isConnected();
       console.log("status_connect", status_connect);
-      if (status_connect.status === 200) {
-        this.isConnect = status_connect.data;
+      if (status_connect?.status === 200) {
+        this.isConnect = status_connect?.data;
       }
     },
     async get_balance() {
-      if (this.isConnect) {
-        const balance_value = await window?.fewcha?.getBalance();
-        if (balance_value.data && typeof balance_value.data === "string") {
-          this.balance = balance_value.data;
-        }
-        console.log("balance_value: ", balance_value);
+      const balance_value = await window?.fewcha?.getBalance();
+      console.log("balance_value: ", balance_value);
+      if (balance_value?.data && typeof balance_value?.data === "string") {
+        this.balance = balance_value.data;
       }
     },
   },

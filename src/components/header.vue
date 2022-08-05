@@ -34,7 +34,7 @@ export default {
       await window?.fewcha?.disconnect();
       const isConnected = await window?.fewcha?.isConnected();
       console.log("isConnected2: ", isConnected);
-      this.isConnect = await isConnected?.data;
+      this.isConnect = isConnected?.data;
     },
 
     async get_status_connect() {

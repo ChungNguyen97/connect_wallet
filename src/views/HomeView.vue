@@ -1,18 +1,27 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h3 @click="handleClick" class="intro">Wellcome Fewcha Wallet</h3>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+  name: "HomeView",
+
+  methods: {
+    handleClick() {
+      console.log(1);
+    },
+  },
+};
 </script>
+
+<style scoped>
+.intro {
+  text-align: center;
+  margin-top: 128px;
+  color: chocolate;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+</style>

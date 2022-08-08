@@ -17,14 +17,15 @@ export default {
   data: () => ({
     isConnect: false,
     balance: "",
+    timeOut1: "",
   }),
   methods: {
     async handleConnect() {
-      const r = await window?.fewcha?.connect();
-      if (r.status === 200) {
+      const response = await window?.fewcha?.connect();
+      if (response.status === 200) {
         this.isConnect = true;
         const balance_value = await window?.fewcha?.getBalance();
-        console.log("b_v:", balance_value);
+        // console.log("b_v:", balance_value);
         if (balance_value.data && typeof balance_value.data === "string") {
           this.balance = balance_value.data;
         }
@@ -33,20 +34,20 @@ export default {
     async hanldeDisConnect() {
       await window?.fewcha?.disconnect();
       const isConnected = await window?.fewcha?.isConnected();
-      console.log("isConnected2: ", isConnected);
+      // console.log("isConnected2: ", isConnected);
       this.isConnect = isConnected?.data;
     },
 
     async get_status_connect() {
       const status_connect = await window?.fewcha?.isConnected();
-      console.log("status_connect", status_connect);
+      // console.log("status_connect", status_connect);
       if (status_connect?.status === 200) {
         this.isConnect = status_connect?.data;
       }
     },
     async get_balance() {
       const balance_value = await window?.fewcha?.getBalance();
-      console.log("balance_value: ", balance_value);
+      // console.log("balance_value: ", balance_value);
       if (balance_value?.data && typeof balance_value?.data === "string") {
         this.balance = balance_value.data;
       }
@@ -54,10 +55,13 @@ export default {
   },
 
   async created() {
-    setTimeout(() => {
+    this.timeOut1 = setTimeout(() => {
       this.get_status_connect();
       this.get_balance();
     }, 500);
+  },
+  beforeDestroy() {
+    clearInterval(this.timeIn1);
   },
 };
 </script>
